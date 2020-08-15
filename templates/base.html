@@ -16,7 +16,14 @@
     <title>BT Real Estate</title>
   </head>
   <body>
+    <!-- TOP BAR -->
+    {% include 'partials/_topbar.html' %}
+    <!-- NAV BAR -->
+    {% include 'partials/_navbar.html' %}
+    <!-- MAIN CONTENT -->
     {% block content %} {% endblock %}
+    <!-- FOOTER -->
+    {% include 'partials/_footer.html' %}
     <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
     <script src="{% static 'js/lightbox.min.js' %} "></script>
