@@ -48,3 +48,7 @@ input[type='submit'].default,
   background-color: #10284e;
   color: #fff;
 }
+
+#changelist-filter h2 {
+  background-color: #30caa0;
+}
