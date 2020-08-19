@@ -30,7 +30,7 @@ def register(request):
                         username=username, password=password, email=email, first_name=first_name, last_name=last_name)
                     # Login after register
                     auth.login(request, user)
-                    messages.success(request, 'You are now logged in')
+                    messages.success(request, 'You are now registered')
                     return redirect('index')
                     # user.save()
                     # messages.success(
@@ -46,8 +46,17 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        # Login User
-        pass
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        # Check if user exists with given username and password
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'You are now logged in')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Incorrect username or password')
+            return redirect('login')
     else:
         return render(request, 'accounts/login.html')
 
