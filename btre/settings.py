@@ -176,9 +176,9 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # Have to generate a google app
 EMAIL_USE_TLS = True
 
 # AWS Bucket Setup
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_STORAGE_BUCKET_NAME = env('S3_BUCKET')
+AWS_ACCESS_KEY_ID = env('S3_KEY')
+AWS_SECRET_ACCESS_KEY = env('S3_SECRET')
 # Look at django-storages: Amazon S3
 # After setting this up, './manage.py collectstatic' will
 # collect the static files in the AWS S3 bucket
