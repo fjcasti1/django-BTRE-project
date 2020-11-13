@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% load humanize %}
 
 {% block title %} | Welcome {% endblock %}
 
 {% block content %}
+
 <!-- Showcase -->
-<section id="showcase">
+<section id='showcase' style="background: url('{% static 'img/showcase.jpg' %}') no-repeat top center fixed ">
   <div class="container text-center">
     <!-- Alerts -->
     {% include 'partials/_alerts.html' %}
@@ -115,9 +118,9 @@
                   <div class="col-6"><i class="fas fa-car"></i> Garage: {{ listing.garage }}</div>
                 </div>
                 <div class="row py-2 text-secondary">
-                  <div class="col-6"><i class="fas fa-bed"></i> 
+                  <div class="col-6"><i class="fas fa-bed"></i>
                     Bedrooms: {{ listing.bedrooms }}</div>
-                  <div class="col-6"><i class="fas fa-bath"></i> 
+                  <div class="col-6"><i class="fas fa-bath"></i>
                     Bathrooms: {{ listing.bathrooms }}
                   </div>
                 </div>
@@ -147,7 +150,7 @@
   </div>
 </section>
 
-<section id="services" class="py-5 bg-secondary text-white">
+<section id="services" class="py-5 bg-secondary text-white" style="background: url('{% static 'img/building.jpg' %}') no-repeat top center fixed">
   <div class="container">
     <div class="row text-center">
       <div class="col-md-4">

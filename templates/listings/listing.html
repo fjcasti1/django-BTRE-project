@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% load humanize %}
+
 {% block title %} | {{ listing.title }}{% endblock %}
 
 {% block content %}
-<section id="showcase-inner" class="py-5 text-white">
+<section id="showcase-inner" class="text-white py-5" style="background: url('{% static 'img/building.jpg' %}') no-repeat top center fixed">
   <div class="container">
     <div class="row text-center">
       <div class="col-md-12">
         <h2 class="display-4">{{ listing.title }}</h2>
         <p class="lead">
-          <i class="fas fa-map-marker"></i> 
+          <i class="fas fa-map-marker"></i>
             {{ listing.city}} {{ listing.state }}, {{ listing.zipcode }}</p>
       </div>
     </div>
@@ -240,18 +243,18 @@
           </div>
           <div class="form-group">
             <label for="name" class="col-form-label">Name:</label>
-            <input type="text" name="name" class="form-control" 
+            <input type="text" name="name" class="form-control"
             {% if user.is_authenticated %}
             value="{{ user.first_name }} {{ user.last_name }}"
-            {% endif %} 
+            {% endif %}
             required />
           </div>
           <div class="form-group">
             <label for="email" class="col-form-label">Email:</label>
-            <input type="email" name="email" class="form-control" 
+            <input type="email" name="email" class="form-control"
             {% if user.is_authenticated %}
             value="{{ user.email }}"
-            {% endif %} 
+            {% endif %}
             required />
           </div>
           <div class="form-group">
