@@ -14,7 +14,7 @@ from django.contrib.messages import constants as messages
 import environ
 import os
 import dj_database_url
-# import django_heroku
+import django_heroku
 
 
 env = environ.Env(
@@ -188,4 +188,4 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
