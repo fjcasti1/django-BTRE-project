@@ -11,7 +11,16 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 from django.contrib.messages import constants as messages
+import environ
 import os
+import dj_database_url
+import django_heroku
+
+
+env = environ.Env(
+    DEBUG = (bool, False)
+)
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +30,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'py)0z^uwa(1hg(*tq)ch=9e5h0%4*_5bg5t^@i1oxzhw9jh^a7'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['realestatekiko.herokuapp.com','localhost']
 
 
 # Application definition
@@ -44,9 +53,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'storages', # Amazon S3 storage
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -83,13 +94,11 @@ WSGI_APPLICATION = 'btre.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'btredb',
-        'USER': 'fjcastillocarrasco',
-        'PASSWORD': 'CabezaRojaPOSTGRES/1992',
-        'HOST': 'localhost',
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -130,7 +139,7 @@ USE_TZ = True
 
 # Static Folder Settings
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'btre/static')
@@ -146,7 +155,24 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+# Email Config
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # Have to generate a google app password
+EMAIL_USE_TLS = True
+
+# AWS Bucket Setup
+AWS_STORAGE_BUCKET_NAME = env('S3_BUCKET')
+AWS_ACCESS_KEY_ID = env('S3_KEY')
+AWS_SECRET_ACCESS_KEY = env('S3_SECRET')
+# Look at django-storages: Amazon S3
+# After setting this up, './manage.py collectstatic' will
+# collect the static files in the AWS S3 bucket
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+django_heroku.settings(locals())
