@@ -35,7 +35,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['realestatekiko.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['realestatekiko.herokuapp.com','realestatekiko-dev.herokuapp.com','localhost']
 
 
 # Application definition
