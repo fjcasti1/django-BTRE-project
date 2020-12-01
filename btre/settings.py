@@ -156,11 +156,12 @@ MESSAGE_TAGS = {
 }
 
 # Email Config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') # Have to generate a google app password
-EMAIL_USE_TLS = True
 
 # AWS Bucket Setup
 # AWS_STORAGE_BUCKET_NAME = env('S3_BUCKET')
