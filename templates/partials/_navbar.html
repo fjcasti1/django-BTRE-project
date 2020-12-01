@@ -20,7 +20,7 @@
           class="nav-item active mr-3"
         {% else %}
           class="nav-item mr-3"
-        {% endif %}  
+        {% endif %}
         >
           <a class="nav-link" href="{% url 'index' %}">Home</a>
         </li>
@@ -29,7 +29,7 @@
           class="nav-item active mr-3"
         {% else %}
           class="nav-item mr-3"
-        {% endif %}  
+        {% endif %}
         >
           <a class="nav-link" href="{% url 'about' %}">About</a>
         </li>
@@ -38,7 +38,7 @@
           class="nav-item active mr-3"
         {% else %}
           class="nav-item mr-3"
-        {% endif %}  
+        {% endif %}
         >
           <a class="nav-link" href="{% url 'listings' %}">Featured Listings</a>
         </li>
@@ -46,12 +46,33 @@
 
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
+          {% if user.is_superuser %}
+            <li
+            {% if 'admin' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item mr-3"
+            {% endif %}
+            >
+              <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+            </li>
+          {% elif user.is_staff %}
+            <li
+            {% if 'admin' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item mr-3"
+            {% endif %}
+            >
+              <a class="nav-link" href="{% url 'admin:index' %}">Staff</a>
+            </li>
+          {% endif %}
           <li
           {% if 'dashboard' in request.path %}
             class="nav-item active mr-3"
           {% else %}
             class="nav-item mr-3"
-          {% endif %}  
+          {% endif %}
           >
             <a class="nav-link" href="{% url 'dashboard' %}">Welcome {{ user.username }} (Dashboard)</a>
           </li>
@@ -71,7 +92,7 @@
             class="nav-item active mr-3"
           {% else %}
             class="nav-item mr-3"
-          {% endif %}  
+          {% endif %}
           >
             <a class="nav-link" href="{% url 'register' %}">
               <i class="fas fa-user-plus"></i> Register</a
@@ -82,7 +103,7 @@
             class="nav-item active mr-3"
           {% else %}
             class="nav-item mr-3"
-          {% endif %}  
+          {% endif %}
           >
             <a class="nav-link" href="{% url 'login' %}">
               <i class="fas fa-sign-in-alt"></i>
